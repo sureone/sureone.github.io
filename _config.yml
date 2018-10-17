@@ -1,7 +1,7 @@
 title: 小网博客
-description: sureone's blog
+description: Xiao-Wang's blog
 google_analytics:
-show_downloads: true
+show_downloads: false
 theme: jekyll-theme-minimal
 
 gems:
