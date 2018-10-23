@@ -1,3 +1,5 @@
+### [imdb和roidb的说明](./rcnn-roidb)
+
 ### <a name="dl-caffelog">关闭cafffe日志输出</a>
 export GLOG_minloglevel=1  
 
@@ -33,5 +35,24 @@ http://images.cocodataset.org/annotations/image_info_test2017.zip
 这些就是全部的microsoft coco数据集2017的链接了。
 
 在linux上可以使用axel多线程工具来下载
+
+### <a name="code-excel-vba-mysql">Excel使用VBA与访问MySql数据</a>
+* 安装mysql odbc 32位驱动 https://dev.mysql.com/downloads/connector/odbc/
+* 打开Excel按下Alt+F11打开VBE
+* 在VBE菜单栏选择“工具”－“引用”，在弹出的引用窗口中，找到"Microsoft ActiveX Data Objects 6.1 Library"和"Microsoft ActiveX Data Objects Recordset 6.0 Library"，把前面的框勾选上，点击确定即可
+```vb
+    Dim conn As ADODB.Connection
+    Dim rs As ADODB.Recordset
+    Set conn = New ADODB.Connection
+    Set rs = New ADODB.Recordset
+    ' 一定要安装mysql odbc 32位驱动 https://dev.mysql.com/downloads/connector/odbc/
+    conn.ConnectionString = "Driver={MySQL ODBC 8.0 Unicode Driver};Server=192.168.1.252;DB=huanbao;UID=huanbao;PWD=huanbao;OPTION=3;"
+    conn.Open
+    rs.Open "select * from `HB_BJJL`", conn
+    'copy数据记录到excel表格
+    Range("A2").CopyFromRecordset rs
+    rs.Close: Set rs = Nothing
+    conn.Close: Set conn = Nothing
+```
 
 ### [2018-10-17 斗拱](./dougong)
