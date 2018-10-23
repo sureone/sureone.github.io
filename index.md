@@ -11,8 +11,9 @@ sudo resolvconf -u
 ### <a name="it-routeconf">ubuntu linux 路由表配置</a>
 所有发往192.168.*.*通过192.168.11.1  
 sudo route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.11.1  
-路由配置加到 /etc/network/interfaces 避免重启后丢失  
-up sudo route add -net 172.16.0.0 netmask 255.255.0.0 gw 172.16.0.1  
+
+路由配置加到 /etc/rc.local 避免重启后丢失  
+route add -net 172.16.0.0 netmask 255.255.0.0 gw 172.16.0.1  
 
 ### <a name="it-ignorenetwork">ubuntu跳过开机网络检测</a>
 进入系统后修改文件/etc/systemd/system/network-online.target.wants/networking.service  
