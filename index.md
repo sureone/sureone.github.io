@@ -56,4 +56,14 @@ http://images.cocodataset.org/annotations/image_info_test2017.zip
     conn.Close: Set conn = Nothing
 ```
 
+### <a name="it-nginx-ERR_INCOMPLETE_CHUNKED_ENCODING">net::ERR_INCOMPLETE_CHUNKED_ENCODING 错误</a>
+
+net::ERR_INCOMPLETE_CHUNKED_ENCODING 错误，但是本地调试没有这个错误，最终发现是服务器的Nginx 配置上有问题，查看error.log 显示的是Upstream prematurely closed connection while reading upstream...错误，翻墙谷歌最终在nginx.conf 的http模块内加入
+
+
+proxy_request_buffering off;  
+proxy_buffering off;  
+
+
+
 ### [2018-10-17 古建筑笔记](./gujian-note)
