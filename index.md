@@ -1,14 +1,14 @@
 
 ### <a name="it-nfs">ubuntu16.04 安装nfs</a>
-##服务器端  
+## 服务器端  
 sudo apt install nfs-kernel-server  
-#编辑/etc/exports 文件，export /logs目录  
+# 编辑/etc/exports 文件，export /logs目录  
 /logs *(rw,sync,no_subtree_check,no_root_squash)  
-#重启nfs服务使配置生效    
+# 重启nfs服务使配置生效    
 sudo service nfs-kernel-server restart  
-##客户端   
+## 客户端   
 sudo apt install nfs-common  
-#编辑/etc/fstab 自动挂载服务器目录到本地目录  
+# 编辑/etc/fstab 自动挂载服务器目录到本地目录  
 192.168.1.234:/logs      /mnt/logs      nfs     defaults         0      2  
 sudo mount -a
 
