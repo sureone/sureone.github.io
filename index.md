@@ -1,3 +1,8 @@
+### <a name="code-build-python-to-exe"> 编译python程序到可执行文件
+https://github.com/Nuitka/Nuitka  
+https://zhuanlan.zhihu.com/p/31721250  
+https://blog.526net.com/?p=3166  
+
 
 ### <a name="it-nfs">ubuntu16.04 安装nfs</a>
 服务器端  
