@@ -1,3 +1,10 @@
+### <a name="it-parted-big-disk"> linux 2T以上硬盘分区 
+parted /dev/sdb mklabel gpt  
+parted /dev/sdb mkpart primary 0 4000000 创建4T的分区  
+mkfs -t ext4 /dev/sdb1  
+mount /dev/sdb1 /mnt/sdb   
+
+
 ### <a name="code-build-python-to-exe"> 编译python程序到可执行文件
 https://github.com/Nuitka/Nuitka  
 https://zhuanlan.zhihu.com/p/31721250  
