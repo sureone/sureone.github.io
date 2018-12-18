@@ -1,7 +1,7 @@
 ### <a name="dl-tracker"> 实时视频目标跟踪
-http://www.robots.ox.ac.uk/~luca/siamese-fc.html
-https://github.com/torrvision/siamfc-tf
-http://davheld.github.io/GOTURN/GOTURN.pdf
+http://www.robots.ox.ac.uk/~luca/siamese-fc.html   
+https://github.com/torrvision/siamfc-tf   
+http://davheld.github.io/GOTURN/GOTURN.pdf   
  
 ### <a name="it-parted-big-disk"> linux 2T以上硬盘分区 
 parted /dev/sdb mklabel gpt  
