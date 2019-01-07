@@ -1,3 +1,22 @@
+### <a name="dl-np-transpose"> 如何理解多维矩阵的转置
+1. 长度为96的数字序列  
+arr = np.arange(96)  
+
+2. 利用上一步的序列构造大小为4x4，3通道的2张二维图来演示4维矩阵的转置  
+dummy_images = arr.reshape(2,4,4,3)  
+第一个维度：图片序号
+第二个维度：图片的行
+第三个维度：图片的列
+第四个维度：图片的通道
+
+3. 将通道数转换到第二个维度，行和列变为第三维度
+transpose_images = dummy_images.transpose(0,3,1,2)
+transpose_images.shape # (2,3,4,4)  
+也就是说如果我们要取第一张图的第一个通道数据可以有以下两个途径： 
+* dummy_images[0,:,:,0]
+* transpose_images[0,0,:,:]
+
+
 ### <a name="dl-tracker"> 实时视频目标跟踪
 http://www.robots.ox.ac.uk/~luca/siamese-fc.html   
 https://github.com/torrvision/siamfc-tf   
