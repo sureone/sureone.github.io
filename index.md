@@ -1,3 +1,8 @@
+### <a name="dl-facenet"> facenet 人脸识别
+https://blog.csdn.net/xingwei_09/article/details/79161931  
+https://github.com/davidsandberg/facenet  
+ 
+
 ### <a name="dl-frcnn"> 理解faster rcnn
 ![image](./images/frcnn.png)
 ### <a name="dl-np-transpose"> 如何理解多维矩阵的转置
