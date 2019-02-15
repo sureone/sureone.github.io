@@ -1,3 +1,10 @@
+### <a name="it-vnc">vncserver</a>
+vncserver启动时修改分辨率 颜色深度
+vncserver  -geometry 1366x768 -depth 24 &  
+vncserver重置密码  
+vncpasswd  
+
+
 ### <a name="dl-facenet"> facenet 人脸识别
 https://blog.csdn.net/xingwei_09/article/details/79161931  
 https://github.com/davidsandberg/facenet  
