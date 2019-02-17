@@ -8,6 +8,9 @@ vncpasswd
 ### <a name="dl-facenet"> facenet 人脸识别
 https://blog.csdn.net/xingwei_09/article/details/79161931  
 https://github.com/davidsandberg/facenet  
+https://github.com/deepinsight/insightface  
+人脸识别、人脸检测、人脸对齐相关论文  
+https://www.jianshu.com/p/27aae9ec045d  
  
 
 ### <a name="dl-frcnn"> 理解faster rcnn
