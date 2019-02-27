@@ -1,3 +1,29 @@
+### <a name="dl-keras-learning">tensorflow keras API使用简介</a>
+#### 查看tensorflow, keras版本
+import tensorflow as tf  
+from tensorflow.keras import layers  
+print(tf.VERSION)  
+print(tf.keras.__version__)  
+#### 构造一个简单的模型
+
+model = tf.keras.Sequential([  
+  #添加一个dense layer（全连接）, input=32,output=64  
+  layers.Dense(64, activation='relu', input_shape=(32,)),  
+  #添加另一个 dense layer  
+  layers.Dense(64, activation='relu'),  
+  #添加softmax层，输出数目为10  
+  layers.Dense(10, activation='softmax')  
+  ])  
+
+#编译model  
+model.compile(optimizer=tf.train.AdamOptimizer(0.001),  
+              loss='categorical_crossentropy',  
+              metrics=['accuracy'])  
+
+
+
+
+
 ### <a name="it-nvidia-driver">nvidia GPU驱动</a>
 sudo apt-get remove –purge nvidia*  
 sudo add-apt-repository ppa:graphics-drivers/ppa  
