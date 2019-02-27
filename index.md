@@ -4,8 +4,8 @@ import tensorflow as tf
 from tensorflow.keras import layers  
 print(tf.VERSION)  
 print(tf.keras.__version__)  
-#### 构造一个简单的模型
 
+#### 构造一个简单的模型
 model = tf.keras.Sequential([  
   #添加一个dense layer（全连接）, input=32,output=64  
   layers.Dense(64, activation='relu', input_shape=(32,)),  
@@ -15,10 +15,37 @@ model = tf.keras.Sequential([
   layers.Dense(10, activation='softmax')  
   ])  
 
-#编译model  
+#### 编译model  
+#指定训练方法optimizer，loss函数，训练监测metrics  
 model.compile(optimizer=tf.train.AdamOptimizer(0.001),  
               loss='categorical_crossentropy',  
               metrics=['accuracy'])  
+
+
+#### 使用numpy创建随机训练数据  
+import numpy as np    
+data = np.random.random((1000, 32))  
+labels = np.random.random((1000, 10))  
+
+#### 对训练数据进行训练，指定迭代次数epochs和batch size   
+model.fit(data, labels, epochs=10, batch_size=32)
+
+
+#### 增加验证数据，在训练的同时监测模型性能
+val_data = np.random.random((100, 32))  
+val_labels = np.random.random((100, 10))  
+
+model.fit(data, labels, epochs=10, batch_size=32,  
+          validation_data=(val_data, val_labels))    
+  
+
+#### 训练时，通过dataset来加载训练数据  
+
+dataset = tf.data.Dataset.from_tensor_slices((data, labels))    
+dataset = dataset.batch(32)  
+dataset = dataset.repeat()  
+
+model.fit(dataset, epochs=10, steps_per_epoch=30)  
 
 
 
