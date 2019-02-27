@@ -1,3 +1,11 @@
+### <a name="it-nvidia-driver">nvidia GPU驱动</a>
+sudo apt-get remove –purge nvidia*  
+sudo add-apt-repository ppa:graphics-drivers/ppa  
+sudo apt-get update  
+sudo apt-get install nvidia-390  
+
+nvidia-smi
+
 ### <a name="it-vnc">vncserver</a>
 vncserver启动时修改分辨率 颜色深度  
 vncserver  -geometry 1366x768 -depth 24 &  
