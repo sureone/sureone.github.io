@@ -1,3 +1,6 @@
+### <a name="dl-tensorflow-stanford"> 斯坦福tensorflow课程 </a>
+https://web.stanford.edu/class/cs20si/syllabus.html
+
 ### <a name="dl-keras-learning">tensorflow keras API使用简介</a>
 #### 查看tensorflow, keras版本
 import tensorflow as tf  
