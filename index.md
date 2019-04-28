@@ -1,11 +1,17 @@
 ### <a name="dl-object-detection"> object detection </a>
 #### faster rcnn
-```
+```python
+# 提取feature
 feature_maps = process(image)
+# 生成可选区域
 ROIs = region_proposal(feature_maps)
+# 对可选区域的每一个
 for ROI in ROIs
+    # 在特征图上对该区域pooling出固定大小的patch
     patch = roi_pooling(feature_maps, ROI)
+    # 对patch进行检测获得坐标及分类得分
     class_scores, box = detector(patch)
+    # 对分类得分做softmax，获得最终分类
     class_probabilities = softmax(class_scores)
 ```  
 
