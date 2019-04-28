@@ -1,5 +1,6 @@
 ### <a name="dl-object-detection">目标识别object detection </a>
-#### faster rcnn
+#### faster rcnn pseudo code  
+https://medium.com/@jonathan_hui/understanding-region-based-fully-convolutional-networks-r-fcn-for-object-detection-828316f07c99
 ```python
 # 提取feature
 feature_maps = process(image)
