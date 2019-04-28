@@ -1,3 +1,14 @@
+### <a name="dl-object-detection"> object detection </a>
+# faster rcnn
+''' 
+feature_maps = process(image)
+ROIs = region_proposal(feature_maps)
+for ROI in ROIs
+    patch = roi_pooling(feature_maps, ROI)
+    class_scores, box = detector(patch)
+    class_probabilities = softmax(class_scores)
+'''    
+
 ### <a name="dl-tensorflow-stanford"> 斯坦福tensorflow课程 </a>
 https://web.stanford.edu/class/cs20si/syllabus.html
 
