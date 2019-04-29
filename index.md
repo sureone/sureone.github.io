@@ -1,9 +1,16 @@
 ### <a name="dl-object-detection">目标识别object detection </a>
+#### rcnn pseudo code
+```python
+ROIs = Selective_Search(image)
+for ROI in ROIs
+    roi_feature = extract_feature(ROI)
+    class_scores, box = detector(patch)
+```
 #### faster rcnn pseudo code  
 https://medium.com/@jonathan_hui/understanding-region-based-fully-convolutional-networks-r-fcn-for-object-detection-828316f07c99
 ```python
 # 提取feature
-feature_maps = process(image)
+feature_maps = extract_feature(image)
 # 生成可选区域
 ROIs = region_proposal(feature_maps)
 # 对可选区域的每一个
