@@ -218,6 +218,135 @@ net::ERR_INCOMPLETE_CHUNKED_ENCODING 错误，但是本地调试没有这个错�
 proxy_request_buffering off;  
 proxy_buffering off;  
 
+### mmdetection yolov3 to darknet
+```python
+from mmdet.apis import init_detector, inference_detector
+from mmdet.apis import inference_detector, init_detector, show_result_pyplot
+import mmcv
+import torch
+import mmdet
+import numpy as np
+
+config_file = 'configs/faster_rcnn/faster_rcnn_r50_fpn_1x_coco.py'
+config_file = '/mnt/sdb/trains/cup/cup.py'
+# download the checkpoint from model zoo and put it in `checkpoints/`
+# url: http://download.openmmlab.com/mmdetection/v2.0/faster_rcnn/faster_rcnn_r50_fpn_1x_coco/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth
+checkpoint_file = 'checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
+checkpoint_file = '/mnt/sdb/trains/cup/mmdir/epoch_98.pth'
+device = 'cuda:0'
+# init a detector
+model = init_detector(config_file, checkpoint_file, device=device)
+# print(dir(model))
+# print(model.backbone().layers())
+# print(dir(model.neck))
+# print(type(model.neck))
+
+
+'''
+    backbone
+
+    conv    512  1 x 1 / 1    22 x  22 x1024   ->    22 x  22 x 512 0.508 BF
+    76 conv   1024  3 x 3 / 1    22 x  22 x 512   ->    22 x  22 x1024 4.568 BF
+    77 conv    512  1 x 1 / 1    22 x  22 x1024   ->    22 x  22 x 512 0.508 BF
+    78 conv   1024  3 x 3 / 1    22 x  22 x 512   ->    22 x  22 x1024 4.568 BF
+    79 conv    512  1 x 1 / 1    22 x  22 x1024   ->    22 x  22 x 512 0.508 BF
+    80 conv   1024  3 x 3 / 1    22 x  22 x 512   ->    22 x  22 x1024 4.568 BF
+    81 conv     18  1 x 1 / 1    22 x  22 x1024   ->    22 x  22 x  18 0.018 BF
+    82 make yolo layer:batch=1,w=22,h=22,n=3,total=9,classes=1,max_boxes=90
+    yolo
+    83 route  79
+    84 conv    256  1 x 1 / 1    22 x  22 x 512   ->    22 x  22 x 256 0.127 BF
+    85 upsample            2x    22 x  22 x 256   ->    44 x  44 x 256
+    86 route  85 61
+    87 conv    256  1 x 1 / 1    44 x  44 x 768   ->    44 x  44 x 256 0.761 BF
+    88 conv    512  3 x 3 / 1    44 x  44 x 256   ->    44 x  44 x 512 4.568 BF
+    89 conv    256  1 x 1 / 1    44 x  44 x 512   ->    44 x  44 x 256 0.508 BF
+    90 conv    512  3 x 3 / 1    44 x  44 x 256   ->    44 x  44 x 512 4.568 BF
+    91 conv    256  1 x 1 / 1    44 x  44 x 512   ->    44 x  44 x 256 0.508 BF
+    92 conv    512  3 x 3 / 1    44 x  44 x 256   ->    44 x  44 x 512 4.568 BF
+    93 conv     18  1 x 1 / 1    44 x  44 x 512   ->    44 x  44 x  18 0.036 BF
+    94 make yolo layer:batch=1,w=44,h=44,n=3,total=9,classes=1,max_boxes=90
+    yolo
+    95 route  91
+    96 conv    128  1 x 1 / 1    44 x  44 x 256   ->    44 x  44 x 128 0.127 BF
+    97 upsample            2x    44 x  44 x 128   ->    88 x  88 x 128
+    98 route  97 36
+    99 conv    128  1 x 1 / 1    88 x  88 x 384   ->    88 x  88 x 128 0.761 BF
+    100 conv    256  3 x 3 / 1    88 x  88 x 128   ->    88 x  88 x 256 4.568 BF
+    101 conv    128  1 x 1 / 1    88 x  88 x 256   ->    88 x  88 x 128 0.508 BF
+    102 conv    256  3 x 3 / 1    88 x  88 x 128   ->    88 x  88 x 256 4.568 BF
+    103 conv    128  1 x 1 / 1    88 x  88 x 256   ->    88 x  88 x 128 0.508 BF
+    104 conv    256  3 x 3 / 1    88 x  88 x 128   ->    88 x  88 x 256 4.568 BF
+    105 conv     18  1 x 1 / 1    88 x  88 x 256   ->    88 x  88 x  18 0.071 BF
+'''
+
+
+def dumpConvModule(module,f):
+    module.bn.bias.data.cpu().numpy().tofile(f)
+    module.bn.weight.data.cpu().numpy().tofile(f)
+    module.bn.running_mean.data.cpu().numpy().tofile(f)
+    module.bn.running_var.data.cpu().numpy().tofile(f)
+    module.conv.weight.data.cpu().numpy().tofile(f)
+print(model)
+def dumpModel(m,i,f):
+    j = 1
+    if type(m) == mmcv.cnn.bricks.conv_module.ConvModule:
+        # print(type(module))
+        dumpConvModule(m,f)
+    elif type(m) == torch.nn.modules.conv.Conv2d:
+        m.bias.data.cpu().numpy().tofile(f)
+        m.weight.data.cpu().numpy().tofile(f)
+    elif type(m) == torch.nn.modules.batchnorm.BatchNorm2d:
+        m.bias.data.cpu().numpy().tofile(f)
+        m.weight.data.cpu().numpy().tofile(f)
+        m.running_mean.data.cpu().numpy().tofile(f)
+        m.running_var.data.cpu().numpy().tofile(f)
+    else:
+        for c in m.children():
+            ids = "{}-{}".format(i,j)
+            print("{}:".format(ids),type(c))
+            dumpModel(c,ids,f)
+            j+=1
+
+
+def convertToDarknet(model,path):
+    with open(path, 'wb') as f:
+        version = np.array([0, 2, 5], dtype=np.int32)  # (int32) version info: major, minor, revision
+        seen = np.array([0], dtype=np.int64)  # (int64) number of images seen during training
+        version.tofile(f)  # (int32) version info: major, minor, revision
+        seen.tofile(f)  # (int64) number of images seen during training
+        dumpModel(model.backbone,"",f)
+        
+        dumpModel(model.neck.detect1,"",f)
+        
+        dumpModel(model.bbox_head.convs_bridge[0],"",f)
+        dumpModel(model.bbox_head.convs_pred[0],"",f)
+
+        dumpModel(model.neck.conv1,"",f)
+        dumpModel(model.neck.detect2,"",f)
+        dumpModel(model.bbox_head.convs_bridge[1],"",f)
+        dumpModel(model.bbox_head.convs_pred[1],"",f)
+        
+        dumpModel(model.neck.conv2,"",f)
+        dumpModel(model.neck.detect3,"",f)
+        dumpModel(model.bbox_head.convs_bridge[2],"",f)
+        dumpModel(model.bbox_head.convs_pred[2],"",f)
+
+        
+        
+
+path = "cupv3.weights"
+convertToDarknet(model,path)
+
+
+
+
+# inference the demo image
+# imfile = "/mnt/4T/tmp/cup/1612495491441.jpg"
+# result = inference_detector(model, imfile)
+# show_result_pyplot(model, imfile, result, score_thr=.3)
+
+```
 
 ### [imdb和roidb的说明](./rcnn-roidb)
 
